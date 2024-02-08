@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class Add_task extends javax.swing.JDialog {
 
    
-    Form_1 parentpanel;
+    private Form_1 parentpanel;
     public Add_task(java.awt.Frame parent, boolean modal,Form_1 newJPanel) {
         super(parent, modal);
         initComponents();

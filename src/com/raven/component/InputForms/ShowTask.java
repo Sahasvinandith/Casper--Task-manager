@@ -19,8 +19,6 @@ public class ShowTask extends javax.swing.JFrame {
         initComponents();
         jLabel2.setText(cur_task.Task_name);
         jTextArea1.setEditable(false);
-        
-       
     }
 
     /**
