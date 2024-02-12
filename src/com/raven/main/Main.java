@@ -10,7 +10,7 @@ import com.raven.event.EventMenuSelected;
 import com.raven.form.Form_1;
 import com.raven.form.Form_2;
 import com.raven.form.Form_3;
-import com.raven.form.Form_4;
+import com.raven.form.ExpensesAndIncomesForm;
 import com.raven.form.Form_Home;
 import java.awt.Color;
 import javax.swing.JComponent;
@@ -28,7 +28,7 @@ public class Main extends javax.swing.JFrame {
     private Form_1 form1;
     private Form_2 form2;
     private Form_3 form3;
-    private Form_4 form4;
+    private ExpensesAndIncomesForm form4;
 
     public Main() {
         initComponents();
@@ -37,7 +37,7 @@ public class Main extends javax.swing.JFrame {
         form1 = new Form_1();
         form2 = new Form_2();
         form3 = new Form_3();
-        form4 = new Form_4();
+        form4 = new ExpensesAndIncomesForm();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
