@@ -85,7 +85,6 @@ public class Main extends javax.swing.JFrame {
 
         panelBorder1 = new com.raven.swing.PanelBorder();
         mainPanel = new javax.swing.JPanel();
-        form_Home1 = new com.raven.form.Form_Home();
         header2 = new com.raven.component.Header();
         menu = new com.raven.component.Menu();
 
@@ -94,7 +93,6 @@ public class Main extends javax.swing.JFrame {
 
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
-        mainPanel.add(form_Home1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -170,7 +168,6 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.form.Form_Home form_Home1;
     private com.raven.component.Header header2;
     private javax.swing.JPanel mainPanel;
     private com.raven.component.Menu menu;
