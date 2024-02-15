@@ -12,6 +12,7 @@ import com.raven.form.Form_3;
 import com.raven.form.Form_4;
 import com.raven.form.Form_Home;
 import java.awt.Color;
+
 import javax.swing.JComponent;
 
 /**
@@ -31,7 +32,9 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
-        setBackground(new Color(0, 0, 0, 0));
+        setResizable(false);
+        
+        setBackground(new Color(255, 255,255));
         home = new Form_Home();
         form1 = new Form_1();
         form2 = new Form_2();
@@ -83,7 +86,8 @@ public class Main extends javax.swing.JFrame {
         menu = new com.raven.component.Menu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        setMinimumSize(new java.awt.Dimension(1497, 657));
+        setSize(new java.awt.Dimension(1497, 657));
 
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
@@ -94,10 +98,10 @@ public class Main extends javax.swing.JFrame {
         panelBorder1Layout.setHorizontalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1293, Short.MAX_VALUE)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1307, Short.MAX_VALUE)
                     .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );

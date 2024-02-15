@@ -3,6 +3,7 @@ package com.raven.swing;
 import com.raven.model.StatusType;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,7 +31,8 @@ public class Table extends JTable {
             public Component getTableCellRendererComponent(JTable jtable, Object o, boolean selected, boolean bln1, int i, int i1) {
                 if (i1 != 4) {
                     Component com = super.getTableCellRendererComponent(jtable, o, selected, bln1, i, i1);
-                    com.setBackground(Color.WHITE);
+                    com.setBackground(Color.GREEN);
+                    com.setFont(Font.getFont("Calibri"));
                     setBorder(noFocusBorder);
                     if (selected) {
                         com.setForeground(new Color(15, 89, 140));

@@ -6,9 +6,12 @@
 package com.raven.form;
 
 import com.raven.component.InputForms.Add_task;
-import com.raven.component.InputForms.ShowTask;
+import com.raven.component.InputForms.Showtask;
 import com.raven.component.Task;
+import com.raven.component.form1_card;
 import com.raven.model.StatusType;
+import com.raven.swing.Deadline_show;
+import com.raven.swing.Table;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -16,10 +19,17 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,26 +38,113 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Form_1 extends javax.swing.JPanel {
 
-    ArrayList<Task> Task_list=new ArrayList<Task>();
-    
+    private ArrayList<Task> Task_list=new ArrayList<Task>();
+    private int current_task=-1;
     public Form_1() {
         initComponents();
+        
+        jLabel1.setForeground(Color.white);
+        
        
+    }
+    
+    public void removetask(Task cur_Task){
+        for(int i=0;i<Task_list.size();i++){
+            if(cur_Task==Task_list.get(i)){
+                Task_list.remove(i);
+            }
+        }
+        DefaultTableModel temptable_model=(DefaultTableModel)table.getModel();
+        temptable_model.setRowCount(0);
+        for(int i=0;i<Task_list.size();i++){
+            String Taskname=Task_list.get(i).Task_name;
+            String Desc=Task_list.get(i).Task_description;
+            String deadl=Task_list.get(i).Deadline;
+            String time=Task_list.get(i).time;
+            Object[] tempr={Taskname,Desc,deadl,time};
+            temptable_model.addRow(tempr);
+          
+            
+            
+        }
     }
     
     public void addTask(Task New_Task){
         
-        System.out.println("Task onput");
-        Task_list.add(New_Task);
-        String Taskname=New_Task.Task_name;
-        String Desc=New_Task.Task_description;
-        String deadl=New_Task.Deadline;
-        JButton newbutton=new JButton("Click me");
-        Object[] tempr={Taskname,Desc,deadl};
+        int indecx=Task_list.size()-1;
         DefaultTableModel temptable_model=(DefaultTableModel)table.getModel();
-        temptable_model.addRow(tempr);
+        temptable_model.setRowCount(0);
+        boolean task_added=false;
+        String Taskname,Desc,deadl,time;
+        if(Task_list.size()==0){
+            Task_list.add(New_Task);
+            Taskname=New_Task.Task_name;
+            Desc=New_Task.Task_description;
+            deadl=New_Task.Deadline;
+            time=New_Task.time;
+            Object[] tempr={Taskname,Desc,deadl,time};
+       
+            temptable_model.addRow(tempr);
+           
+            
+            System.out.println("first row added");
+            return;
+            
+        
+        }
+        for(int i=0;i<Task_list.size();i++){
+            
+            if(Task_list.get(i).deadline_date.getTime()>New_Task.deadline_date.getTime()){
+                Task_list.add(i, New_Task);
+                task_added=true;
+                System.out.println("out with index");
+                break;
+               
+                
+            }
+            
+        }
+        if(!task_added){
+            Task_list.add(New_Task);
+        }
+        for(int i=0;i<Task_list.size();i++){
+            Taskname=Task_list.get(i).Task_name;
+            Desc=Task_list.get(i).Task_description;
+            deadl=Task_list.get(i).Deadline;
+            time=Task_list.get(i).time;
+            Object[] tempr={Taskname,Desc,deadl,time};
+            temptable_model.addRow(tempr);
+          
+            
+            
+        }
         
         
+    }
+    
+    public void refresh(){
+        this.
+    }
+    
+    @Override
+    protected void paintChildren(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        GradientPaint g = new GradientPaint(0, 0, Color.decode("#2C3584"), getWidth(), getHeight(), Color.decode("#A74292"));
+        g2.setPaint(g);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        g2.fillRect(getWidth() - 20, 0, getWidth(), getHeight());
+        super.paintChildren(grphcs);
+    }
+
+    public Form_1(form1_card form1_card2, JButton jButton1, JDialog jDialog1, JDialog jDialog2, JLabel jLabel1, JScrollPane jScrollPane1, JTable table) {
+        this.form1_card2 = form1_card2;
+        this.jButton1 = jButton1;
+        this.jDialog1 = jDialog1;
+        this.jDialog2 = jDialog2;
+        this.jLabel1 = jLabel1;
+        this.jScrollPane1 = jScrollPane1;
+        this.table = table;
     }
     
    
@@ -66,8 +163,8 @@ public class Form_1 extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         form1_card2 = new com.raven.component.form1_card();
         jButton1 = new javax.swing.JButton();
-        spTable = new javax.swing.JScrollPane();
-        table = new com.raven.swing.Table();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -91,7 +188,7 @@ public class Form_1 extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Task Manager");
         jLabel1.setToolTipText("");
@@ -109,38 +206,32 @@ public class Form_1 extends javax.swing.JPanel {
             }
         });
 
-        spTable.setBorder(null);
-
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Task name", "Description", "Deadline", "Status"
+                "Task ", "Description", "Deadline", "Time"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        table.setToolTipText("");
+        table.setOpaque(false);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt);
             }
         });
-        spTable.setViewportView(table);
+        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -148,16 +239,16 @@ public class Form_1 extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(11, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(spTable)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(form1_card2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(20, 20, 20)))))
+                .addContainerGap()
+                .addComponent(form1_card2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(539, 539, 539)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +259,8 @@ public class Form_1 extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -181,18 +272,20 @@ public class Form_1 extends javax.swing.JPanel {
  
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-        // TODO add your handling code here:
-        int selected_row=table.getSelectedRow();
-        Task selectedTask=Task_list.get(selected_row);
-        ShowTask tempshowtask=new ShowTask(selectedTask);
-        tempshowtask.show();
-    }//GEN-LAST:event_tableMouseClicked
-
     private void form1_card2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_form1_card2MouseClicked
         // TODO add your handling code here:
         
     }//GEN-LAST:event_form1_card2MouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+       
+        int row=this.table.getSelectedRow();
+        JFrame tempframe=new JFrame();
+        Showtask selected_task=new Showtask(tempframe, true,Task_list.get(row), this);
+        selected_task.setVisible(true);
+        
+    }//GEN-LAST:event_tableMouseClicked
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -201,7 +294,7 @@ public class Form_1 extends javax.swing.JPanel {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane spTable;
-    private com.raven.swing.Table table;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
