@@ -1,41 +1,73 @@
 package com.raven.form;
 
+import com.raven.main.Main;
 import com.raven.model.Model_Card;
 import com.raven.model.StatusType;
 import com.raven.swing.ScrollBar;
 import java.awt.Color;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class Form_Home extends javax.swing.JPanel {
-
+    
+    private Main my_main=null;
     public Form_Home() {
         initComponents();
+        String motivation_with_author,expression;
+        Date current_date=new Date();
+        int day=current_date.getDay();
         
-        card3.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/raven/icon/flag.png")), "Daham", "A little progress everyday adds upto big result - unknown", "So Let's do this buddy.."));
+        switch (day) {
+            case 1:
+                motivation_with_author="The only way to achieve the impossible is to believe it is possible - Charles Kingsleigh";
+                expression="New week, new goals. Embrace the opportunity to start fresh and make this week count.";
+                break;
+                
+            case 2:
+                motivation_with_author="Believe you can and you're halfway there - Theodore Roosevelt";
+                expression="Stay focused and determined. Success doesn't come from what you do occasionally, but from what you do consistently";
+                break;
+            case 3:
+                motivation_with_author="\"Success is not final, failure is not fatal: It is the courage to continue that counts.\" - Winston Churchill";
+                expression="Halfway there! Keep pushing forward. Your hard work will pay off.";
+                break;
+            case 4:
+                motivation_with_author="\"Hardships often prepare ordinary people for an extraordinary destiny.\" - C.S. Lewis";
+                expression="Don't stop now. You're closer than you were yesterday. Keep going and finish the week strong";
+                break;
+            case 5:
+                motivation_with_author="\"It does not matter how slowly you go as long as you do not stop.\" - Confucius";
+                expression="Finish the week on a high note. Your dedication and perseverance have brought you this far.";
+                break;
+            case 6:
+                motivation_with_author="\"Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.\" - Albert Schweitzer";
+                expression="oday is a day to recharge and reflect. Take time to rest and rejuvenate, but don't lose sight of your goals";
+                break;
+            case 7:
+                motivation_with_author="\"Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful.\" - Albert Schweitzer";
+                expression="oday is a day to recharge and reflect. Take time to rest and rejuvenate, but don't lose sight of your goals";
+                break;
+            default:
+                throw new AssertionError();
+        }
+        card3.setData(new Model_Card("Hello Sahas..",motivation_with_author, expression));
         card3.setSize(400, 300);
         //  add row table
-        spTable.setVerticalScrollBar(new ScrollBar());
-        spTable.getVerticalScrollBar().setBackground(Color.WHITE);
-        spTable.getViewport().setBackground(Color.WHITE);
-        JPanel p = new JPanel();
-        p.setBackground(Color.WHITE);
-        spTable.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        table.addRow(new Object[]{"Mike Bhand", "mikebhand@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.PENDING});
-        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
-        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
-        table.addRow(new Object[]{"Andrew Strauss", "andrewstrauss@gmail.com", "Editor", "25 Apr,2018", StatusType.APPROVED});
-        table.addRow(new Object[]{"Ross Kopelman", "rosskopelman@gmail.com", "Subscriber", "25 Apr,2018", StatusType.APPROVED});
-        table.addRow(new Object[]{"Mike Hussy", "mikehussy@gmail.com", "Admin", "25 Apr,2018", StatusType.REJECT});
-        table.addRow(new Object[]{"Kevin Pietersen", "kevinpietersen@gmail.com", "Admin", "25 Apr,2018", StatusType.PENDING});
+        
+        //assigning values to card 2- task manager
+        card2.setData(new Model_Card("Task Manager","Casper the task manager ghost","Click here to summon...."));
+        card5.setData(new Model_Card("Notes","Casper the Note taker","Click here to summon...."));
+        card1.setData(new Model_Card("Digital Diary","Casper the friendly diary","Click here to summon...."));
+        card4.setData(new Model_Card("Digital Wallet","Casper the Treasurer","Click here to summon...."));
+        card6.setData(new Model_Card("Week Planer","Casper the Journey buddy","Click here to summon...."));
+        
+        
+        
+    }
+    public void getMain(Main enter_main){
+        this.my_main=enter_main;
     }
 
     @SuppressWarnings("unchecked")
@@ -45,12 +77,13 @@ public class Form_Home extends javax.swing.JPanel {
         panel = new javax.swing.JLayeredPane();
         card3 = new com.raven.component.Card();
         jDayChooser1 = new com.toedter.calendar.JDayChooser();
-        panelBorder1 = new com.raven.swing.PanelBorder();
-        jLabel1 = new javax.swing.JLabel();
-        spTable = new javax.swing.JScrollPane();
-        table = new com.raven.swing.Table();
+        card1 = new com.raven.component.Card();
+        card2 = new com.raven.component.Card();
+        card4 = new com.raven.component.Card();
+        card5 = new com.raven.component.Card();
+        card6 = new com.raven.component.Card();
 
-        card3.setColor1(new java.awt.Color(241, 208, 62));
+        card3.setColor1(new java.awt.Color(64, 190, 44));
         card3.setColor2(new java.awt.Color(211, 184, 61));
 
         panel.setLayer(card3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -63,7 +96,7 @@ public class Form_Home extends javax.swing.JPanel {
             .addGroup(panelLayout.createSequentialGroup()
                 .addComponent(card3, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDayChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                .addComponent(jDayChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -75,83 +108,119 @@ public class Form_Home extends javax.swing.JPanel {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(127, 127, 127));
-        jLabel1.setText("Standard Table Design");
-
-        spTable.setBorder(null);
-
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Name", "Email", "User Type", "Joined", "Status"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        card1.setColor1(new java.awt.Color(255, 102, 0));
+        card1.setColor2(new java.awt.Color(255, 204, 102));
+        card1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card1MouseClicked(evt);
             }
         });
-        spTable.setViewportView(table);
 
-        javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
-        panelBorder1.setLayout(panelBorder1Layout);
-        panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addContainerGap(1100, Short.MAX_VALUE))
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spTable)
-                .addContainerGap())
-        );
-        panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spTable, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                .addGap(14, 14, 14))
-        );
+        card2.setColor1(new java.awt.Color(102, 19, 139));
+        card2.setColor2(new java.awt.Color(122, 86, 203));
+        card2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card2MouseClicked(evt);
+            }
+        });
+
+        card4.setColor1(new java.awt.Color(153, 0, 153));
+        card4.setColor2(new java.awt.Color(255, 102, 255));
+        card4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card4MouseClicked(evt);
+            }
+        });
+
+        card5.setColor1(new java.awt.Color(0, 102, 255));
+        card5.setColor2(new java.awt.Color(131, 204, 204));
+        card5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card5MouseClicked(evt);
+            }
+        });
+
+        card6.setColor1(new java.awt.Color(0, 102, 51));
+        card6.setColor2(new java.awt.Color(0, 255, 51));
+        card6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                card6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(panel)
                 .addGap(20, 20, 20))
-            .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(card5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(card6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(card4, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card5, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card6, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(350, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void card2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card2MouseClicked
+        // TODO add your handling code here:
+        this.my_main.setForm(this.my_main.form1);
+        
+    }//GEN-LAST:event_card2MouseClicked
+
+    private void card5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card5MouseClicked
+        // TODO add your handling code here:
+        this.my_main.setForm(this.my_main.form2);
+    }//GEN-LAST:event_card5MouseClicked
+
+    private void card1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card1MouseClicked
+        // TODO add your handling code here:
+        this.my_main.setForm(this.my_main.form3);
+       
+    }//GEN-LAST:event_card1MouseClicked
+
+    private void card4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card4MouseClicked
+        // TODO add your handling code here:
+        this.my_main.setForm(this.my_main.form4);
+    }//GEN-LAST:event_card4MouseClicked
+
+    private void card6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_card6MouseClicked
+        // TODO add your handling code here:
+        this.my_main.setForm(this.my_main.form5);
+    }//GEN-LAST:event_card6MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.component.Card card1;
+    private com.raven.component.Card card2;
     private com.raven.component.Card card3;
+    private com.raven.component.Card card4;
+    private com.raven.component.Card card5;
+    private com.raven.component.Card card6;
     private com.toedter.calendar.JDayChooser jDayChooser1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane panel;
-    private com.raven.swing.PanelBorder panelBorder1;
-    private javax.swing.JScrollPane spTable;
-    private com.raven.swing.Table table;
     // End of variables declaration//GEN-END:variables
 }

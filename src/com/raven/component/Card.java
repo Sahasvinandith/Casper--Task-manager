@@ -37,8 +37,8 @@ public class Card extends javax.swing.JPanel {
     }
 
     public void setData(Model_Card data) {
-        lbIcon.setIcon(data.getIcon());
-        lbTitle.setText("Hello "+data.getname());
+       
+        lbTitle.setText(data.getname());
         lbValues.setText(data.getcomment());
         lbDescription.setText(data.getDescription());
     }
@@ -47,22 +47,19 @@ public class Card extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbIcon = new javax.swing.JLabel();
         lbTitle = new javax.swing.JLabel();
         lbValues = new javax.swing.JLabel();
         lbDescription = new javax.swing.JLabel();
-
-        lbIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/icon/stock.png"))); // NOI18N
 
         lbTitle.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lbTitle.setForeground(new java.awt.Color(255, 255, 255));
         lbTitle.setText("Title");
 
-        lbValues.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        lbValues.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         lbValues.setForeground(new java.awt.Color(255, 255, 255));
         lbValues.setText("Values");
 
-        lbDescription.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lbDescription.setFont(new java.awt.Font("sansserif", 3, 14)); // NOI18N
         lbDescription.setForeground(new java.awt.Color(255, 255, 255));
         lbDescription.setText("Description");
 
@@ -73,26 +70,21 @@ public class Card extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbDescription)
-                    .addComponent(lbValues)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbIcon)))
-                .addContainerGap(221, Short.MAX_VALUE))
+                    .addComponent(lbValues, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTitle)
+                    .addComponent(lbDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbIcon)
-                    .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
-                .addComponent(lbValues)
-                .addGap(18, 18, 18)
+                .addComponent(lbTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbValues, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(lbDescription)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -111,7 +103,6 @@ public class Card extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lbDescription;
-    private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbValues;
     // End of variables declaration//GEN-END:variables

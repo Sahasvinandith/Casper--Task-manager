@@ -7,8 +7,7 @@ package com.raven.component.InputForms;
 import com.raven.component.Task;
 import com.raven.form.Form_1;
 import java.util.Date;
-import javax.swing.JPanel;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author MSI
@@ -73,7 +72,7 @@ public class Add_task extends javax.swing.JDialog {
         jLabel4.setText("Time: ");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" };
+            String[] strings = { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -178,57 +177,69 @@ public class Add_task extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String Task_name=this.jTextField1.getText();
+        
+        if(Task_name=="" || this.jDateChooser1.getDate()==null ){
+            JOptionPane.showMessageDialog(null, "Task name & Deadline date must be selected!!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(this.jList1.getSelectedValue()==null || this.jList2.getSelectedValue()==null || this.jList3.getSelectedValue()==null){
+            JOptionPane.showMessageDialog(null, "Please enter time correctly!!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String Description=this.jTextArea1.getText();
         Date Dead=this.jDateChooser1.getDate();
+        
+        
         
         int Date=Dead.getDate();
         int month=Dead.getMonth();
         String month_string;
         switch (month) {
-            case 1:
+            case 0:
                 month_string="Jan";
                 break;
-            case 2:
+            case 1:
                 month_string="Feb";
                 break;
                 
-            case 3:                    
+            case 2:                    
                 month_string="Mar";
                 break;
                 
-            case 4:
+            case 3:
                  month_string="Apr";
                 break;
                 
-            case 5:
+            case 4:
                 month_string="May";
                 break;
                 
-            case 6:
+            case 5:
                 month_string="June";
                 break;
                 
-            case 7:
+            case 6:
                 month_string="July";
                 break;
                 
-            case 8:
+            case 7:
                 month_string="Aug";
                 break;
                 
-            case 9:
+            case 8:
                 month_string="Sep";
                 break;
                 
-            case 10:
+            case 9:
                 month_string="Oct";
                 break;
                 
-            case 11:
+            case 10:
                 month_string="Nov";
                 break;
                 
-            case 12:
+            case 11:
                 month_string="Dec";
                 break;
             default:
@@ -245,9 +256,14 @@ public class Add_task extends javax.swing.JDialog {
        
         int hour=Integer.parseInt(time_hour);
         
+        
+        if(hour==12&&time_day_half=="AM"){
+            hour=0;
+        }
         if(time_day_half=="PM"){
             hour+=12;
         }
+        
         
         Dead.setHours(hour);
         Dead.setMinutes(Minutes);

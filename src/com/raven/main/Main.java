@@ -9,7 +9,9 @@ import com.raven.event.EventMenuSelected;
 import com.raven.form.Form_1;
 import com.raven.form.Form_2;
 import com.raven.form.Form_3;
-import com.raven.form.Form_4;
+import com.raven.form.FormReal;
+import com.raven.form.Form_31;
+import com.raven.form.Form_5;
 import com.raven.form.Form_Home;
 import java.awt.Color;
 
@@ -24,11 +26,12 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    private Form_Home home;
-    private Form_1 form1;
-    private Form_2 form2;
-    private Form_3 form3;
-    private Form_4 form4;
+    public Form_Home home;
+    public Form_1 form1; //task
+    public Form_2 form2; //note
+    public Form_31 form3; //diary
+    public FormReal form4; //wallet
+    public Form_5 form5; //week
 
     public Main() {
         initComponents();
@@ -36,10 +39,12 @@ public class Main extends javax.swing.JFrame {
         
         setBackground(new Color(255, 255,255));
         home = new Form_Home();
+        home.getMain(this);
         form1 = new Form_1();
         form2 = new Form_2();
-        form3 = new Form_3();
-        form4 = new Form_4();
+        form3 = new Form_31();
+        form4 = new FormReal();
+        form5 = new Form_5();
         menu.initMoving(Main.this);
         menu.addEventMenuSelected(new EventMenuSelected() {
             @Override
@@ -56,14 +61,15 @@ public class Main extends javax.swing.JFrame {
                     setForm(form3);
                 } else if(index==4){
                     setForm(form4);
-                }
+                } else if(index==5)
+                    setForm(form5);
             }
         });
         //  set when system open start with home form
         setForm(new Form_Home());
     }
 
-    private void setForm(JComponent com) {
+        public void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();
@@ -81,8 +87,6 @@ public class Main extends javax.swing.JFrame {
 
         panelBorder1 = new com.raven.swing.PanelBorder();
         mainPanel = new javax.swing.JPanel();
-        form_Home1 = new com.raven.form.Form_Home();
-        header2 = new com.raven.component.Header();
         menu = new com.raven.component.Menu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,7 +95,6 @@ public class Main extends javax.swing.JFrame {
 
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
-        mainPanel.add(form_Home1, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
@@ -100,20 +103,16 @@ public class Main extends javax.swing.JFrame {
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1307, Short.MAX_VALUE)
-                    .addComponent(header2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1307, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panelBorder1Layout.setVerticalGroup(
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,6 +133,10 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    
+        
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -161,14 +164,37 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                
+                Main newmain_class=new Main();
+                newmain_class.setVisible(true);
+                refresh_thread refresher;
+                refresher = new refresh_thread(newmain_class.form1);
+                refresher.start();
             }
         });
     }
+    
+    private static class refresh_thread extends Thread {
+    private final Form_1 updating_form;
+
+    public refresh_thread(Form_1 updating_form) {
+        this.updating_form = updating_form;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            updating_form.refresh();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.raven.form.Form_Home form_Home1;
-    private com.raven.component.Header header2;
     private javax.swing.JPanel mainPanel;
     private com.raven.component.Menu menu;
     private com.raven.swing.PanelBorder panelBorder1;

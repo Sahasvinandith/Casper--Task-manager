@@ -13,6 +13,7 @@ import com.raven.model.StatusType;
 import com.raven.swing.Deadline_show;
 import com.raven.swing.Table;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,6 +21,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JButton;
@@ -30,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,8 +49,26 @@ public class Form_1 extends javax.swing.JPanel {
         
         jLabel1.setForeground(Color.white);
         
+         table.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component renderer = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                String type = (String) value;
+                // Set background color based on the value in the "Type" column
+                if ("Oncoming".equals(type)) {
+                    renderer.setBackground(Color.decode("#B2FBA5"));
+                } else if ("Deadline passed".equals(type)) {
+                    renderer.setBackground(Color.decode("#ff6242"));
+                } else if("on time".equals(type)){
+                    renderer.setBackground(Color.YELLOW);
+                }
+                return renderer;
+            }
+        });
+        
        
     }
+    
+    
     
     public void removetask(Task cur_Task){
         for(int i=0;i<Task_list.size();i++){
@@ -54,13 +76,33 @@ public class Form_1 extends javax.swing.JPanel {
                 Task_list.remove(i);
             }
         }
+        String Taskname,Desc,deadl,time;
         DefaultTableModel temptable_model=(DefaultTableModel)table.getModel();
         temptable_model.setRowCount(0);
         for(int i=0;i<Task_list.size();i++){
-            String Taskname=Task_list.get(i).Task_name;
-            String Desc=Task_list.get(i).Task_description;
-            String deadl=Task_list.get(i).Deadline;
-            String time=Task_list.get(i).time;
+            Taskname=Task_list.get(i).Task_name;
+            Desc=Task_list.get(i).Task_description;
+            deadl=Task_list.get(i).Deadline;
+            time=Task_list.get(i).time;
+            deadl=deadl+" "+time;
+            
+            Date deadline_date=Task_list.get(i).deadline_date;
+        
+            LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours()+1, deadline_date.getMinutes()+1); // Example deadline: January 31, 2024, 12:00 PM
+            LocalDateTime currentTime = LocalDateTime.now(); // Current time
+        
+            Duration duration = Duration.between(currentTime, deadline);
+
+            if (duration.isNegative()) {
+                time="Deadline passed";
+
+            } else if (duration.isZero()) {
+                System.out.println("You have reached the deadline.");
+                time="on time";
+            } else {
+                time="Oncoming";
+            }
+            
             Object[] tempr={Taskname,Desc,deadl,time};
             temptable_model.addRow(tempr);
           
@@ -82,7 +124,25 @@ public class Form_1 extends javax.swing.JPanel {
             Desc=New_Task.Task_description;
             deadl=New_Task.Deadline;
             time=New_Task.time;
-            Object[] tempr={Taskname,Desc,deadl,time};
+            deadl=deadl+" "+time;
+            
+            Date deadline_date=New_Task.deadline_date;
+        
+            LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours()+1, deadline_date.getMinutes()+1); // Example deadline: January 31, 2024, 12:00 PM
+            LocalDateTime currentTime = LocalDateTime.now(); // Current time
+        
+        Duration duration = Duration.between(currentTime, deadline);
+            
+        if (duration.isNegative()) {
+            time="Deadline passed";
+            
+        } else if (duration.isZero()) {
+            System.out.println("You have reached the deadline.");
+            time="on time";
+        } else {
+            time="Oncoming";
+        }
+        Object[] tempr={Taskname,Desc,deadl,time};
        
             temptable_model.addRow(tempr);
            
@@ -112,6 +172,25 @@ public class Form_1 extends javax.swing.JPanel {
             Desc=Task_list.get(i).Task_description;
             deadl=Task_list.get(i).Deadline;
             time=Task_list.get(i).time;
+            deadl=deadl+" "+time;
+            
+            Date deadline_date=Task_list.get(i).deadline_date;
+            LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours(), deadline_date.getMinutes()); // Example deadline: January 31, 2024, 12:00 PM
+            LocalDateTime currentTime = LocalDateTime.now(); // Current time
+            System.out.println("Year: "+(deadline_date.getYear()+1900)+" month: "+(deadline_date.getMonth()+1)+" "+(deadline_date.getDate())+(deadline_date.getHours())+" mins "+(deadline_date.getMinutes()));
+        
+            Duration duration = Duration.between(currentTime, deadline);
+
+            if (duration.isNegative()) {
+                time="Deadline passed";
+
+            } else if (duration.isZero()) {
+                System.out.println("You have reached the deadline.");
+                time="on time";
+            } else {
+                time="Oncoming";
+            }
+            
             Object[] tempr={Taskname,Desc,deadl,time};
             temptable_model.addRow(tempr);
           
@@ -123,7 +202,40 @@ public class Form_1 extends javax.swing.JPanel {
     }
     
     public void refresh(){
-        this.
+        this.form1_card2.refresh_status(this.Task_list);
+        DefaultTableModel temptable_model=(DefaultTableModel)table.getModel();
+        temptable_model.setRowCount(0);
+        String Taskname,Desc,deadl,time;
+        for(int i=0;i<Task_list.size();i++){
+            Taskname=Task_list.get(i).Task_name;
+            Desc=Task_list.get(i).Task_description;
+            deadl=Task_list.get(i).Deadline;
+            time=Task_list.get(i).time;
+            deadl=deadl+" "+time;
+            
+            Date deadline_date=Task_list.get(i).deadline_date;
+        
+            LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours(), deadline_date.getMinutes()); // Example deadline: January 31, 2024, 12:00 PM
+            LocalDateTime currentTime = LocalDateTime.now(); // Current time
+        
+            Duration duration = Duration.between(currentTime, deadline);
+
+            if (duration.isNegative()) {
+                time="Deadline passed";
+
+            } else if (duration.isZero()) {
+                System.out.println("You have reached the deadline.");
+                time="on time";
+            } else {
+                time="Oncoming";
+            }
+            
+            Object[] tempr={Taskname,Desc,deadl,time};
+            temptable_model.addRow(tempr);
+          
+            
+            
+        }
     }
     
     @Override
@@ -226,6 +338,10 @@ public class Form_1 extends javax.swing.JPanel {
             }
         });
         table.setOpaque(false);
+        table.setRowHeight(20);
+        table.setSelectionBackground(new java.awt.Color(31, 87, 129));
+        table.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        table.setShowVerticalLines(true);
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt);
@@ -272,11 +388,6 @@ public class Form_1 extends javax.swing.JPanel {
  
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void form1_card2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_form1_card2MouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_form1_card2MouseClicked
-
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
        
@@ -286,6 +397,11 @@ public class Form_1 extends javax.swing.JPanel {
         selected_task.setVisible(true);
         
     }//GEN-LAST:event_tableMouseClicked
+
+    private void form1_card2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_form1_card2MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_form1_card2MouseClicked
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

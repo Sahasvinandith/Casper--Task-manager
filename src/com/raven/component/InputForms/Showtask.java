@@ -8,6 +8,10 @@ import com.raven.component.Task;
 import com.raven.form.Form_1;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -40,7 +44,7 @@ public class Showtask extends javax.swing.JDialog {
         
         Date deadline_date=cur_task.deadline_date;
         
-        LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours()+1, deadline_date.getMinutes()+1); // Example deadline: January 31, 2024, 12:00 PM
+        LocalDateTime deadline = LocalDateTime.of(deadline_date.getYear()+1900, deadline_date.getMonth()+1, deadline_date.getDate(), deadline_date.getHours(), deadline_date.getMinutes()); // Example deadline: January 31, 2024, 12:00 PM
         LocalDateTime currentTime = LocalDateTime.now(); // Current time
         System.out.println("time deadline "+deadline.toString()+"\nNow time "+currentTime.toString());
         // Calculate the duration between the deadline and the current time
@@ -68,10 +72,10 @@ public class Showtask extends javax.swing.JDialog {
         }
         
         if(delay==true){
-            jLabel6.setBackground(Color.red);
+            jLabel6.setBackground(Color.decode("#800000"));
         }
         else{
-            jLabel6.setBackground(Color.GREEN);
+            jLabel6.setBackground(Color.decode("#A7F432"));
         }
         
         jLabel6.setForeground(Color.WHITE);
@@ -82,6 +86,29 @@ public class Showtask extends javax.swing.JDialog {
     
         
     }
+//    
+//    @Override
+//    public void paint(Graphics g) {
+//        Graphics2D g2d = (Graphics2D) g;
+//
+//        // Define gradient colors and coordinates
+//        Color color1 = Color.BLUE;
+//        Color color2 = Color.GREEN;
+//        int width = getWidth();
+//        int height = getHeight();
+//        GradientPaint gradient = new GradientPaint(0, 0, color1, width, height, color2);
+//
+//        // Set rendering hints for better quality
+//        RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        g2d.setRenderingHints(hints);
+//
+//        // Fill the background with the gradient paint
+//        g2d.setPaint(gradient);
+//        g2d.fillRect(0, 0, width, height);
+//
+//        this.parent_frame.paint(g);
+//    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,15 +132,23 @@ public class Showtask extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 0, 51));
         jLabel1.setText("Task:");
+        jLabel1.setOpaque(true);
 
-        jLabel2.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
         jLabel2.setText("jLabel2");
+        jLabel2.setOpaque(true);
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 0, 51));
         jLabel3.setText("Description: ");
+        jLabel3.setOpaque(true);
 
+        jLabel4.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
         jLabel4.setText("jLabel4");
+        jLabel4.setOpaque(true);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -121,16 +156,21 @@ public class Showtask extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTextArea1);
 
         jRadioButton1.setText("Done");
+        jRadioButton1.setOpaque(true);
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 153, 0));
         jLabel5.setText("Time left: ");
+        jLabel5.setOpaque(true);
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Dubai", 1, 14)); // NOI18N
         jLabel6.setText("jLabel6fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        jLabel6.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,18 +181,19 @@ public class Showtask extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(30, 30, 30))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(30, 30, 30)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -178,7 +219,7 @@ public class Showtask extends javax.swing.JDialog {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton1)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,6 +268,7 @@ public class Showtask extends javax.swing.JDialog {
                         System.exit(0);
                     }
                 });
+                
                 dialog.setVisible(true);
             }
         });
