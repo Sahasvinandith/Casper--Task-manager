@@ -5,6 +5,7 @@
  */
 package com.raven.form;
 //DASDS
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
@@ -34,101 +35,73 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-
-
 public class Form_31 extends javax.swing.JPanel {
+    
+    private Connection con;
 
     //private DiaryTableModel tableModel;
-    
-    public Form_31() {
+    public Form_31(Connection con) {
         initComponents();
+        this.con=con;
         Show_products_In_JTable();
 //        tableModel = new DiaryTableModel();
 //        jTable1.setModel(tableModel);
-        
-        
+
     }
+
     
-    
-    public Connection getConnection()
-    {
-        Connection con = null;
-        
-        try {
-            con= DriverManager.getConnection("jdbc:mysql://localhost/product_db2","root","");
-            //JOptionPane.showMessageDialog(null, "Connected");
-            return con;
-        } catch (SQLException ex) {
-            Logger.getLogger(Form_31.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Not Connected to Database.");
-            return null;
-        }
-    }
-    
-    public boolean checkInputs()
-    {
-        if(ChooseDate.getDate() == null || txtTitle.getText()==null || txtEntry.getText() == null)
-        {
+
+    public boolean checkInputs() {
+        if (ChooseDate.getDate() == null || txtTitle.getText() == null || txtEntry.getText() == null) {
             return false;
-        }
-        else
-        {
-           return true;
-        
+        } else {
+            return true;
+
         }
     }
-    
-    public ArrayList<NewClass> getProductList1()
-    {
-            ArrayList<NewClass> DiaryList = new ArrayList<NewClass>();
-            Connection con = getConnection();
-            String query = "SELECT * FROM diary";
-            
-            Statement st;
-            ResultSet rs;
+
+    public ArrayList<NewClass> getProductList1() {
+        ArrayList<NewClass> DiaryList = new ArrayList<NewClass>();
+        String query = "SELECT * FROM diary";
+
+        Statement st;
+        ResultSet rs;
         try {
-            
+
             st = con.createStatement();
             rs = st.executeQuery(query);
             NewClass diary;
-            
-            while(rs.next())
-            {
-                diary = new NewClass(rs.getInt("id"),rs.getDate("date"),rs.getString("title"),rs.getString("entry"));
+
+            while (rs.next()) {
+                diary = new NewClass(rs.getInt("id"), rs.getDate("date"), rs.getString("title"), rs.getString("entry"));
                 DiaryList.add(diary);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Form_31.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return DiaryList;
-        
+
     }
-            
-   // 2- Populate the JTable
-    public void Show_products_In_JTable()
-    {
+
+    // 2- Populate the JTable
+    public void Show_products_In_JTable() {
         ArrayList<NewClass> list = getProductList1();
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
         Object[] row = new Object[5];
-        for(int i = 0;i<list.size();i++)
-        {
-            row[0] = list.get(i).getId(); 
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getId();
             row[1] = list.get(i).getAddDate();
             row[2] = list.get(i).getName();
             row[3] = list.get(i).getType();
             //  
-            
+
             model.addRow(row);
-            
+
         }
     }
-    
-    
-    
+
     protected void paintChildren(Graphics grphcs) {
         Graphics2D g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -138,7 +111,6 @@ public class Form_31 extends javax.swing.JPanel {
         g2.fillRect(getWidth() - 20, 0, getWidth(), getHeight());
         super.paintChildren(grphcs);
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -368,40 +340,40 @@ public class Form_31 extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (jTable1.getRowCount() > 0) {
-        // Get the selected row index
-        int selectedRowIndex = jTable1.getSelectedRow();
+            // Get the selected row index
+            int selectedRowIndex = jTable1.getSelectedRow();
 
-        if (selectedRowIndex != -1) {
-            // Get data from the selected row
-            String id = jTable1.getValueAt(selectedRowIndex, 0).toString();
-            String date = jTable1.getValueAt(selectedRowIndex, 1).toString();
-            String title = jTable1.getValueAt(selectedRowIndex, 2).toString();
-            String entry = jTable1.getValueAt(selectedRowIndex, 3).toString();
+            if (selectedRowIndex != -1) {
+                // Get data from the selected row
+                String id = jTable1.getValueAt(selectedRowIndex, 0).toString();
+                String date = jTable1.getValueAt(selectedRowIndex, 1).toString();
+                String title = jTable1.getValueAt(selectedRowIndex, 2).toString();
+                String entry = jTable1.getValueAt(selectedRowIndex, 3).toString();
 
-            // Create a new JFrame to display the details
-            JFrame detailsFrame = new JFrame("Entry Details");
-            detailsFrame.setSize(400, 300);
+                // Create a new JFrame to display the details
+                JFrame detailsFrame = new JFrame("Entry Details");
+                detailsFrame.setSize(400, 300);
 
-            // Create a JTextArea to display the details
-            JTextArea detailsTextArea = new JTextArea();
-            detailsTextArea.setEditable(false);
-            detailsTextArea.append("Date   : " + date + "\n\n");
-            detailsTextArea.append("Title  : " + title + "\n\n");
-            detailsTextArea.append("Entry  : " + entry);
+                // Create a JTextArea to display the details
+                JTextArea detailsTextArea = new JTextArea();
+                detailsTextArea.setEditable(false);
+                detailsTextArea.append("Date   : " + date + "\n\n");
+                detailsTextArea.append("Title  : " + title + "\n\n");
+                detailsTextArea.append("Entry  : " + entry);
 
-            // Add the JTextArea to the JFrame
-            detailsFrame.add(new JScrollPane(detailsTextArea));
+                // Add the JTextArea to the JFrame
+                detailsFrame.add(new JScrollPane(detailsTextArea));
 
-            // Set JFrame properties
-            detailsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            detailsFrame.setLocationRelativeTo(null);
-            detailsFrame.setVisible(true);
+                // Set JFrame properties
+                detailsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                detailsFrame.setLocationRelativeTo(null);
+                detailsFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select an entry from the table.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Please select an entry from the table.");
+            JOptionPane.showMessageDialog(this, "No entries to display.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "No entries to display.");
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTable1HierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable1HierarchyChanged
@@ -410,22 +382,22 @@ public class Form_31 extends javax.swing.JPanel {
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow != -1) {
-            // Get data from the selected row and display details
-            Object data1 = jTable1.getValueAt(selectedRow, 0);
-            Object data2 = jTable1.getValueAt(selectedRow, 1);
-            // Add more lines to retrieve other data from the selected row
+            int selectedRow = jTable1.getSelectedRow();
+            if (selectedRow != -1) {
+                // Get data from the selected row and display details
+                Object data1 = jTable1.getValueAt(selectedRow, 0);
+                Object data2 = jTable1.getValueAt(selectedRow, 1);
+                // Add more lines to retrieve other data from the selected row
 
-            // Example: Displaying details in a JOptionPane
-            String details = "Data1: " + data1 + "\nData2: " + data2;
-            javax.swing.JOptionPane.showMessageDialog(null, details, "Row Details", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                // Example: Displaying details in a JOptionPane
+                String details = "Data1: " + data1 + "\nData2: " + data2;
+                javax.swing.JOptionPane.showMessageDialog(null, details, "Row Details", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
         }
-    }
     }//GEN-LAST:event_jTable1KeyPressed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitleActionPerformed
@@ -433,12 +405,10 @@ public class Form_31 extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTitleActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-          if(checkInputs()==true)
-        {
+        if (checkInputs() == true) {
 
             try {
-                Connection con = getConnection();
-                PreparedStatement ps =con.prepareStatement("INSERT INTO diary(date,title,entry)" + "values(?,?,?)", Statement.RETURN_GENERATED_KEYS); //database table names
+                PreparedStatement ps = con.prepareStatement("INSERT INTO diary(date,title,entry)" + "values(?,?,?)", Statement.RETURN_GENERATED_KEYS); //database table names
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String addDate = dateFormat.format(ChooseDate.getDate());
                 ps.setString(1, addDate);
@@ -447,46 +417,39 @@ public class Form_31 extends javax.swing.JPanel {
                 ps.setString(3, txtEntry.getText());
 
                 ps.executeUpdate();
-                
+
                 int generatedId = -1; // Default value
-                    ResultSet rs = ps.getGeneratedKeys();
-                    if (rs.next()) {
-                         generatedId = rs.getInt(1);
-                        }
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    generatedId = rs.getInt(1);
+                }
                 //Show_products_In_JTable();
                 //JOptionPane.showMessageDialog(null, "Data Added");
-                DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-                    Object[] rowData = {generatedId,addDate, txtTitle.getText(), txtEntry.getText()};
-                    model.addRow(rowData);
-                    this.txtEntry.setText("");
-                    this.txtTitle.setText("");
-                    this.ChooseDate.setDate(null);
-                    
-                    
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                Object[] rowData = {generatedId, addDate, txtTitle.getText(), txtEntry.getText()};
+                model.addRow(rowData);
+                this.txtEntry.setText("");
+                this.txtTitle.setText("");
+                this.ChooseDate.setDate(null);
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-            
-            
-        }
-        else
-        {
+
+        } else {
             JOptionPane.showMessageDialog(null, "One or More Field Are Empty");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-       int selectedRow = jTable1.getSelectedRow();
-       
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRow = jTable1.getSelectedRow();
+
         if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(null, "Please select a row to delete.");
-        return;
-    }
-        
-        
-        Connection con = getConnection();
+            JOptionPane.showMessageDialog(null, "Please select a row to delete.");
+            return;
+        }
+
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM diary WHERE id = ?");
             Object primaryKeyValue = jTable1.getValueAt(selectedRow, 0);
@@ -495,17 +458,16 @@ public class Form_31 extends javax.swing.JPanel {
 
             ps.setInt(1, intValue);
             ps.executeUpdate();
-            
+
             model.removeRow(selectedRow);
             JOptionPane.showMessageDialog(null, "Page deleted successfully!" + primaryKeyValue);
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(Form_31.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Error deleting row: " + ex.getMessage());
         }
     }//GEN-LAST:event_DeleteActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser ChooseDate;
@@ -526,4 +488,3 @@ public class Form_31 extends javax.swing.JPanel {
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }
-

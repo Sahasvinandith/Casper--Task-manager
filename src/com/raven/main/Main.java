@@ -14,8 +14,15 @@ import com.raven.form.Form_31;
 import com.raven.form.Form_5;
 import com.raven.form.Form_Home;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +42,10 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        Connection db_connection=getConnection();
+        if(db_connection == null){
+            System.exit(0);
+        }
         setResizable(false);
 
         setBackground(new Color(255, 255, 255));
@@ -42,8 +53,8 @@ public class Main extends javax.swing.JFrame {
 //        home.getMain(this);
         form1 = new Form_1();
         form2 = new Form_2();
-        form3 = new Form_31();
-        form4 = new FormReal();
+        form3 = new Form_31(db_connection);
+        form4 = new FormReal(db_connection);
         form5 = new Form_5();
 
         this.menu.initMoving(Main.this);
@@ -69,6 +80,44 @@ public class Main extends javax.swing.JFrame {
         });
         //  set when system open start with home form
         setForm(new Form_Home());
+    }
+    public Connection getConnection() {
+        Connection con = null;
+        String dbName = "casper_db";
+        String dbUrl = "jdbc:mysql://localhost/";
+        String dbUser = "root";
+        String dbPassword = "";
+
+        try {
+            // Connect to MySQL without specifying a database
+            con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+
+            // Create the database if it doesn't exist
+            try (Statement stmt = con.createStatement()) {
+                stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS " + dbName);
+                System.out.println("Database " + dbName + " checked/created successfully.");
+            }
+
+            // Connect to the specific database
+            con = DriverManager.getConnection(dbUrl + dbName, dbUser, dbPassword);
+
+//             Create tables if they don't exist
+            try (Statement stmt = con.createStatement()) {
+                String createTableSQL;
+                createTableSQL = "CREATE TABLE IF NOT EXISTS diary (id INT AUTO_INCREMENT PRIMARY KEY,date DATE NOT NULL,title VARCHAR(255) NOT NULL, entry TEXT NOT NULL);";
+                stmt.executeUpdate(createTableSQL);
+                System.out.println("Table 'Products' checked/created successfully.");
+                createTableSQL="CREATE TABLE IF NOT EXISTS expenses (id INT AUTO_INCREMENT PRIMARY KEY,date DATE NOT NULL,description VARCHAR(255) NOT NULL,amount DECIMAL(10, 2) NOT NULL,type VARCHAR(50) NOT NULL);";
+                stmt.executeUpdate(createTableSQL);
+            }
+
+            return con;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Form_31.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Failed to connect or initialize database.");
+            return null;
+        }
     }
 
     public void setForm(JComponent com) {

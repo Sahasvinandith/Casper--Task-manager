@@ -43,14 +43,14 @@ public class FormReal extends javax.swing.JPanel {
     /**
      * Creates new form Formmmm
      */
-    public FormReal() {
+    public FormReal(Connection con) {
 
         initComponents();
+        this.con=con;
         //tableModel = new ExpenseIncomeTableModel();
         Show_products_In_JTable();
 
         try {
-            con = getConnection();
             balance = getTotalExpenses();
             //JOptionPane.showMessageDialog(null, "Total expenses: " + balance);
         } catch (Exception ex) {
@@ -85,19 +85,7 @@ public class FormReal extends javax.swing.JPanel {
 
     }
 
-    public Connection getConnection() {
-        Connection con = null;
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost/product_db2", "root", "");
-            //JOptionPane.showMessageDialog(null, "Connected");
-            return con;
-        } catch (SQLException ex) {
-            Logger.getLogger(FormReal.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Not Connected");
-            return null;
-        }
-    }
+    
 
     private double getTotalExpenses() throws SQLException {
         double totalSum = 0;
@@ -188,7 +176,6 @@ public class FormReal extends javax.swing.JPanel {
 
     public ArrayList<Products> getProductList() {
         ArrayList<Products> productList = new ArrayList<Products>();
-        Connection con = getConnection();
         String query = "SELECT * FROM expenses";
 
         Statement st;
@@ -481,7 +468,6 @@ public class FormReal extends javax.swing.JPanel {
 
             }
             try {
-                Connection con = getConnection();
                 PreparedStatement ps = con.prepareStatement("INSERT INTO expenses(date,description,amount,type)" + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS); //database table names
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String addDate = dateFormat.format(jDateChooser1.getDate());
@@ -512,7 +498,6 @@ public class FormReal extends javax.swing.JPanel {
             }
 
             try {
-                con = getConnection();
                 balance = getTotalExpenses();
                 //JOptionPane.showMessageDialog(null, "Total expenses: " + balance);
             } catch (Exception ex) {
@@ -595,7 +580,6 @@ public class FormReal extends javax.swing.JPanel {
             return;
         }
 
-        Connection con = getConnection();
         try {
             PreparedStatement ps = con.prepareStatement("DELETE FROM expenses WHERE id = ?");
             Object primaryKeyValue = TableOne.getValueAt(selectedRow, 4);
