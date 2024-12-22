@@ -59,22 +59,6 @@ git clone https://github.com/Sahasvinandith/Casper--Task-manager
 
 Once the above steps are completed, you can run the application by executing the `Main.java` file in your IDE.
 
-## Deployment
-
-To deploy this project, follow these steps:
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/Sahasvinandith/Casper--Task-manager
-```
-
-2. Open your XAMPP server and start the MySQL service.
-
-3. Navigate to the `ddashbrd/src/com/raven/main/Main.java` file, open it, and update the database connection details with your root password.
-
-4. Launch the application from your IDE.
-
 ## Usage
 
 Once the application is deployed, you can start using its various features such as:
