@@ -57,12 +57,12 @@ public class Form_31 extends javax.swing.JPanel {
         Connection con = null;
         
         try {
-            con= DriverManager.getConnection("jdbc:mysql://localhost/casper_products","admin","");
+            con= DriverManager.getConnection("jdbc:mysql://localhost/product_db2","root","");
             //JOptionPane.showMessageDialog(null, "Connected");
             return con;
         } catch (SQLException ex) {
             Logger.getLogger(Form_31.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Not Connected");
+            JOptionPane.showMessageDialog(null, "Not Connected to Database.");
             return null;
         }
     }
