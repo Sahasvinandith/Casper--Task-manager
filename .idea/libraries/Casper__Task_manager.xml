@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Casper--Task-manager">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/swing-time-picker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jcalendar-1.4.zip!/" />
+      <root url="jar://$PROJECT_DIR$/mysql-connector-j-8.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/TimingFramework-0.55.jar!/" />
+      <root url="jar://$PROJECT_DIR$/jcalendar-1.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jcalendar-1.4.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/AbsoluteLayout.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
